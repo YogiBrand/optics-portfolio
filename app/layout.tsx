@@ -94,9 +94,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           )}
         </nav>
 
-        <main className="container py-12 md:py-16 lg:py-20 min-h-screen">
-          {children}
-        </main>
+                <main className="container py-12 md:py-16 lg:py-20 min-h-screen overflow-x-hidden">
+                  {children}
+                </main>
 
                 <footer className="bg-white border-t border-primary/10">
                   <div className="container py-12">

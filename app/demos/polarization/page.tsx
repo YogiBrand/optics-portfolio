@@ -2,8 +2,13 @@
 import { useEffect, useRef, useState } from 'react'
 
 function drawMap(cvs: HTMLCanvasElement, thetaDeg: number, cross?: boolean){
-  const w = 420, h = 420
+  // Responsive canvas size based on container
+  const containerWidth = cvs.parentElement?.clientWidth || 420
+  const size = Math.min(420, containerWidth - 32) // 32px padding
+  const w = size, h = size
   cvs.width = w; cvs.height = h
+  cvs.style.width = '100%'
+  cvs.style.height = 'auto'
   const ctx = cvs.getContext('2d')!
   const img = ctx.createImageData(w, h)
   const cx=w/2, cy=h/2
@@ -128,9 +133,9 @@ export default function Polarization(){
             <p className="section-heading">VISUALIZATION</p>
             <h3 className="h3">Intensity Map</h3>
           </div>
-          <div className="flex justify-center">
-            <canvas ref={ref} className="rounded-2xl border-2 shadow-lift" 
-                    style={{borderColor: cross ? '#ED3F27' : '#134686'}} />
+          <div className="flex justify-center w-full overflow-hidden">
+            <canvas ref={ref} className="rounded-2xl border-2 shadow-lift max-w-full" 
+                    style={{borderColor: cross ? '#ED3F27' : '#134686', maxWidth: '100%'}} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-white/50 rounded-lg p-4 text-center">

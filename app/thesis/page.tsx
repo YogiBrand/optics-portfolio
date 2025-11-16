@@ -4,8 +4,12 @@ import { createPortal } from 'react-dom'
 
 // Helper function to draw polarization pattern
 function drawPolarizationMiniMap(cvs: HTMLCanvasElement, thetaDeg: number, cross: boolean) {
-  const w = 200, h = 200
+  const containerWidth = cvs.parentElement?.clientWidth || 200
+  const size = Math.min(200, containerWidth - 32)
+  const w = size, h = size
   cvs.width = w; cvs.height = h
+  cvs.style.width = '100%'
+  cvs.style.height = 'auto'
   const ctx = cvs.getContext('2d')!
   const img = ctx.createImageData(w, h)
   const cx = w/2, cy = h/2
@@ -261,12 +265,12 @@ function FiguresGallery() {
       {/* Modal */}
       {mounted && openModal && createPortal(
         <div 
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto"
           style={{animation: 'fadeIn 0.2s ease-out'}}
           onClick={() => setOpenModal(null)}
         >
           <div 
-            className="bg-cream rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-lift"
+            className="bg-cream rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[95vh] overflow-y-auto shadow-lift my-auto"
             style={{animation: 'fadeInUp 0.3s ease-out'}}
             onClick={(e) => e.stopPropagation()}
           >
@@ -710,11 +714,11 @@ function InteractivePolarizationDemo() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 flex flex-col items-center justify-center">
+        <div className="bg-white rounded-xl p-6 flex flex-col items-center justify-center overflow-hidden">
           <canvas 
             ref={canvasRef} 
-            className="rounded-xl border-4 shadow-lg mb-4" 
-            style={{borderColor: cross ? '#ED3F27' : '#134686'}}
+            className="rounded-xl border-4 shadow-lg mb-4 max-w-full" 
+            style={{borderColor: cross ? '#ED3F27' : '#134686', maxWidth: '100%'}}
           />
           <div className="text-center">
             <p className="text-sm font-semibold text-ink mb-1">
@@ -818,8 +822,8 @@ function InteractiveSPRDemo() {
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white rounded-xl p-6">
             <h4 className="font-bold text-primary mb-4">Synthetic Transmission Spectrum</h4>
-            <div className="relative" style={{height: '300px'}}>
-              <svg viewBox="0 0 500 300" className="w-full h-full">
+            <div className="relative w-full overflow-x-auto" style={{minHeight: '250px', height: '300px', maxHeight: '400px'}}>
+              <svg viewBox="0 0 500 300" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
                 {/* Background grid */}
                 <g stroke="#e5e7eb" strokeWidth="0.5">
                   {[0, 50, 100, 150, 200, 250, 300].map(y => (

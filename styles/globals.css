@@ -14,10 +14,36 @@
 
 html, body {
   @apply bg-cream text-ink font-sans antialiased;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 * {
   @apply transition-colors duration-200;
+}
+
+/* Responsive containers - prevent horizontal overflow */
+canvas, svg, img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ensure plotly/chart containers are responsive */
+.plotly, [class*="plotly"] {
+  max-width: 100% !important;
+  overflow-x: auto;
+}
+
+/* Prevent long text/emails from causing overflow */
+.body, p, .lead, a, span {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Allow code/mono text to wrap */
+.mono, code, pre {
+  word-break: break-all;
 }
 
 a {

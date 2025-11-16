@@ -196,7 +196,7 @@ export default function AFMVision(){
             </div>
           ) : (
             <>
-              <canvas ref={canvasRef} className="w-full rounded-xl border-2 border-accent/20 shadow-soft" />
+              <canvas ref={canvasRef} className="w-full max-w-full rounded-xl border-2 border-accent/20 shadow-soft" style={{maxWidth: '100%', height: 'auto'}} />
               <div className="grid grid-cols-2 gap-4 pt-2">
                 <div className="bg-primary/5 rounded-lg p-3 border-l-4 border-primary">
                   <p className="text-xs font-semibold text-primary mb-1">FFT Analysis</p>

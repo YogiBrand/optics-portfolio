@@ -64,7 +64,9 @@ export default function AISPR() {
       margin: {l:40, r:10, t:30, b:40},
       xaxis: { title: 'Wavelength (nm)' },
       yaxis: { title: 'Relative transmission (a.u.)' },
-      showlegend: true
+      showlegend: true,
+      responsive: true,
+      autosize: true
     })
   }, [pred, planar, depth, theta])
 
@@ -163,7 +165,7 @@ export default function AISPR() {
             <p className="section-heading">SPECTROSCOPY</p>
             <h3 className="h3">Synthetic Transmission Spectrum</h3>
           </div>
-          <div ref={el} style={{width:'100%', height: 500}} className="rounded-xl border-2 border-primary/20" />
+          <div ref={el} style={{width:'100%', minHeight: '300px', height: '500px', maxHeight: '80vh'}} className="rounded-xl border-2 border-primary/20 overflow-hidden" />
           <p className="text-xs text-ink/60">
             Blue: Surrogate model prediction • Red: Planar approximation (Eq. 2.3.18)
           </p>
