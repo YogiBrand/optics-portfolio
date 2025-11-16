@@ -44,30 +44,76 @@ export default function AISPR() {
   useEffect(()=>{
     if(!el.current) return
 
-    // Build synthetic spectra around both predictions
-    const wl = new Array(400).fill(0).map((_,i)=> 450 + i*1.5) // 450–1050 nm
-    const polFactor = Math.pow(Math.cos(theta*Math.PI/180), 2) // ~cos^2 for LP coupling
-    const gwidth = 10 + (80 - depth*1.0) * 0.4 // deeper grooves => narrower resonance (crude)
-    const A = 1.2 * polFactor + 0.05
+    const renderChart = () => {
+      if(!el.current) return
 
-    const ySur = wl.map(x=> lorentz(x, pred, gwidth, A))
-    const yPla = wl.map(x=> lorentz(x, planar, gwidth*1.1, A*0.9))
+      // Build synthetic spectra around both predictions
+      const wl = new Array(400).fill(0).map((_,i)=> 450 + i*1.5) // 450–1050 nm
+      const polFactor = Math.pow(Math.cos(theta*Math.PI/180), 2) // ~cos^2 for LP coupling
+      const gwidth = 10 + (80 - depth*1.0) * 0.4 // deeper grooves => narrower resonance (crude)
+      const A = 1.2 * polFactor + 0.05
 
-    const traces = [{
-      x: wl, y: ySur, mode: 'lines', name: 'Surrogate (poly model)'
-    }, {
-      x: wl, y: yPla, mode: 'lines', name: 'Planar approx (Eq. 2.3.18)', line: {dash: 'dot'}
-    }]
+      const ySur = wl.map(x=> lorentz(x, pred, gwidth, A))
+      const yPla = wl.map(x=> lorentz(x, planar, gwidth*1.1, A*0.9))
 
-    renderPlot(el.current!, traces as any, {
-      template: 'plotly_dark',
-      margin: {l:40, r:10, t:30, b:40},
-      xaxis: { title: 'Wavelength (nm)' },
-      yaxis: { title: 'Relative transmission (a.u.)' },
-      showlegend: true,
-      responsive: true,
-      autosize: true
-    })
+      // Responsive margins and font sizes
+      const isMobile = window.innerWidth < 768
+      const chartMargins = isMobile 
+        ? {l: 50, r: 20, t: 20, b: 50}  // More space for y-axis labels on mobile
+        : {l: 60, r: 20, t: 30, b: 60}
+
+      const traces = [{
+        x: wl, 
+        y: ySur, 
+        mode: 'lines', 
+        name: 'Surrogate Model',
+        line: { width: isMobile ? 2 : 3, color: '#134686' }
+      }, {
+        x: wl, 
+        y: yPla, 
+        mode: 'lines', 
+        name: 'Planar Approx', 
+        line: { dash: 'dot', width: isMobile ? 1.5 : 2, color: '#ED3F27' }
+      }]
+
+      renderPlot(el.current!, traces as any, {
+        template: 'plotly_dark',
+        margin: chartMargins,
+        xaxis: { 
+          title: {
+            text: 'Wavelength (nm)',
+            font: { size: isMobile ? 12 : 14 }
+          },
+          tickfont: { size: isMobile ? 10 : 12 }
+        },
+        yaxis: { 
+          title: {
+            text: 'Transmission (a.u.)',
+            font: { size: isMobile ? 12 : 14 }
+          },
+          tickfont: { size: isMobile ? 10 : 12 }
+        },
+        showlegend: true,
+        legend: {
+          orientation: isMobile ? 'h' : 'v',
+          x: isMobile ? 0.5 : 1,
+          xanchor: isMobile ? 'center' : 'left',
+          y: isMobile ? 1.1 : 1,
+          yanchor: isMobile ? 'bottom' : 'top',
+          font: { size: isMobile ? 10 : 12 }
+        },
+        responsive: true,
+        autosize: true,
+        displayModeBar: !isMobile // Hide toolbar on mobile
+      })
+    }
+
+    renderChart()
+
+    // Re-render on window resize (handles device rotation)
+    const handleResize = () => renderChart()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [pred, planar, depth, theta])
 
   return (
@@ -165,9 +211,20 @@ export default function AISPR() {
             <p className="section-heading">SPECTROSCOPY</p>
             <h3 className="h3">Synthetic Transmission Spectrum</h3>
           </div>
-          <div ref={el} style={{width:'100%', minHeight: '300px', height: '500px', maxHeight: '80vh'}} className="rounded-xl border-2 border-primary/20 overflow-hidden" />
+          <div 
+            ref={el} 
+            className="rounded-xl border-2 border-primary/20 overflow-hidden bg-[#1e1e1e]" 
+            style={{
+              width: '100%', 
+              minHeight: '350px',
+              height: 'clamp(350px, 50vh, 600px)'
+            }} 
+          />
           <p className="text-xs text-ink/60">
-            Blue: Surrogate model prediction • Red: Planar approximation (Eq. 2.3.18)
+            <span className="inline-block w-3 h-3 bg-[#134686] rounded-sm mr-1 align-middle"></span> 
+            Surrogate model prediction 
+            <span className="inline-block w-3 h-3 bg-[#ED3F27] rounded-sm ml-3 mr-1 align-middle"></span> 
+            Planar approximation
           </p>
         </div>
       </section>
