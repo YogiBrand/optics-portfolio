@@ -1,0 +1,75 @@
+QUICK START: Getting AFM Images for Your Portfolio
+===================================================
+
+FASTEST METHOD (5 minutes):
+---------------------------
+
+1. Go to: https://www.afmworkshop.com/applications/atomic-force-microscopy-images/thin-films
+
+2. Find any periodic structure image (gratings, arrays, films)
+
+3. Right-click → Save Image As → Save to your computer
+
+4. Go to your portfolio: http://localhost:3006/case-studies/afm-vision
+
+5. Upload the image using the file picker
+
+6. Adjust the "nm per pixel" slider (try values between 5-20)
+
+7. Watch the tool automatically:
+   - Calculate the grating pitch
+   - Show defects in red overlay
+   - Display FFT analysis results
+
+
+RECOMMENDED IMAGES TO TRY:
+---------------------------
+
+From AFMWorkshop:
+- Indium Tin Oxide on glass (periodic structure)
+- Silver thin films (surface features)
+- Any grating or array pattern
+
+From Asylum Research Gallery (afm.oxinst.com/gallery/):
+- Semiconductor periodic arrays
+- Thin film samples
+- Nanostructure images
+
+
+GENERATE YOUR OWN (if you have Python + PIL):
+----------------------------------------------
+
+cd public/sample-afm-images
+pip3 install Pillow numpy
+python3 generate-test-images.py
+
+This creates 3 test images simulating:
+- 623nm pitch circular grating
+- 668nm pitch circular grating  
+- 717nm pitch circular grating
+
+
+WHAT TO EXPECT:
+----------------
+
+The AFM-Vision tool will:
+✓ Analyze spatial frequencies via FFT
+✓ Estimate the grating pitch in nanometers
+✓ Overlay potential defects in red
+✓ Compare to theoretical pitch values (623/668/717 nm)
+
+
+TROUBLESHOOTING:
+-----------------
+
+- Image too small? Try larger images (>256x256 pixels)
+- Wrong pitch? Adjust the nm/pixel scale slider
+- No defects shown? Image might be very uniform
+- Upload fails? Ensure file is JPG, PNG, or BMP format
+
+
+QUESTIONS?
+----------
+
+See HOW-TO-GET-IMAGES.md for detailed instructions and resources.
+

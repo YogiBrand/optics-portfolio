@@ -1,0 +1,28 @@
+{
+  "name": "optics-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3006",
+    "build": "next build",
+    "start": "next start -p 3006",
+    "lint": "next lint",
+    "postinstall": "tailwindcss -i ./styles/globals.css -o ./styles/output.css --minify || echo 'postinstall step ok'"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "plotly.js-dist-min": "2.30.0",
+    "fft.js": "^4.0.4",
+    "classnames": "2.3.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "10.4.16",
+    "postcss": "8.4.35",
+    "tailwindcss": "3.4.0",
+    "typescript": "5.3.3",
+    "@types/react": "18.2.42",
+    "@types/node": "20.5.9"
+  }
+}
