@@ -44,7 +44,7 @@ export default function AISPR() {
   useEffect(()=>{
     if(!el.current) return
 
-    const renderChart = () => {
+    const renderChart = async () => {
       if(!el.current) return
 
       // Build synthetic spectra around both predictions
@@ -76,7 +76,7 @@ export default function AISPR() {
         line: { dash: 'dot', width: isMobile ? 1.5 : 2, color: '#ED3F27' }
       }]
 
-      renderPlot(el.current!, traces as any, {
+      await renderPlot(el.current!, traces as any, {
         template: 'plotly_dark',
         margin: chartMargins,
         xaxis: { 

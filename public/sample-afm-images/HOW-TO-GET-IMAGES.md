@@ -130,3 +130,4 @@ python3 generate-test-images.py
 
 Or simply download real AFM images from the galleries above - they'll work perfectly with the tool!
 
+
