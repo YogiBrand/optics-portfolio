@@ -77,21 +77,27 @@ export default function AISPR() {
       }]
 
       await renderPlot(el.current!, traces as any, {
-        template: 'plotly_dark',
+        paper_bgcolor: '#1e1e1e',
+        plot_bgcolor: '#2d2d2d',
+        font: { color: '#e0e0e0' },
         margin: chartMargins,
         xaxis: { 
           title: {
             text: 'Wavelength (nm)',
-            font: { size: isMobile ? 12 : 14 }
+            font: { size: isMobile ? 12 : 14, color: '#e0e0e0' }
           },
-          tickfont: { size: isMobile ? 10 : 12 }
+          tickfont: { size: isMobile ? 10 : 12, color: '#b0b0b0' },
+          gridcolor: '#404040',
+          zerolinecolor: '#505050'
         },
         yaxis: { 
           title: {
             text: 'Transmission (a.u.)',
-            font: { size: isMobile ? 12 : 14 }
+            font: { size: isMobile ? 12 : 14, color: '#e0e0e0' }
           },
-          tickfont: { size: isMobile ? 10 : 12 }
+          tickfont: { size: isMobile ? 10 : 12, color: '#b0b0b0' },
+          gridcolor: '#404040',
+          zerolinecolor: '#505050'
         },
         showlegend: true,
         legend: {
@@ -100,7 +106,8 @@ export default function AISPR() {
           xanchor: isMobile ? 'center' : 'left',
           y: isMobile ? 1.1 : 1,
           yanchor: isMobile ? 'bottom' : 'top',
-          font: { size: isMobile ? 10 : 12 }
+          font: { size: isMobile ? 10 : 12, color: '#e0e0e0' },
+          bgcolor: 'rgba(0,0,0,0.3)'
         },
         responsive: true,
         autosize: true,
